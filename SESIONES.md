@@ -17,6 +17,8 @@
     * [Array.prototype.reduce()](https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Array/reduce)
 
 ## Sesión 3
+  * [Serialización de objetos JSON](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
+  * [Deserialización de objetos JSON](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse)
   * [Argumentos por línea de comandos con yargs](https://www.npmjs.com/package/yargs)
   * Creación de objetos dinámicamente
   * [Actividad 1](./ejercicios/actividad1.md)

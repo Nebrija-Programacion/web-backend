@@ -2,6 +2,7 @@ import { name, add } from './utils';
 import { getNotes } from './notes';
 import chalk from 'chalk';
 import yargs from 'yargs';
+import fs from 'fs';
 
 yargs.version('1.1.0');
 
@@ -60,3 +61,19 @@ yargs.command({
 });
 
 yargs.parse();
+
+const obj = {
+  name: 'Alberto',
+  friends: ['Luis', 'Jorge', 'Maria'],
+};
+
+const str = JSON.stringify(obj);
+console.log(str);
+
+const obj2 = JSON.parse(str);
+console.log(obj2);
+
+fs.writeFileSync('notes.txt', str);
+const obj3 = JSON.parse(fs.readFileSync('notes.txt').toString());
+
+console.log(obj3);
