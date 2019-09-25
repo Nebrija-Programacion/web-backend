@@ -15,3 +15,8 @@
     * [Array.prototype.find()](https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Array/find)
     * [Array.prototype.some()](https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Array/some)
     * [Array.prototype.reduce()](https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Array/reduce)
+
+## Sesión 3
+  * [Argumentos por línea de comandos con yargs](https://www.npmjs.com/package/yargs)
+  * Creación de objetos dinámicamente
+  * [Actividad 1](./ejercicios/actividad1.md)

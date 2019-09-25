@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "babel src --out-dir dist",
-    "start": "nodemon --exec babel-node src/app.js",
+    "dev": "nodemon --watch src --exec 'npm run build && node dist/app.js'",
+    "start": "npm run build && node dist/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -17,5 +18,8 @@
     "@babel/node": "^7.6.1",
     "@babel/preset-env": "^7.6.0",
     "nodemon": "^1.19.2"
+  },
+  "dependencies": {
+    "yargs": "^14.0.0"
   }
 }
