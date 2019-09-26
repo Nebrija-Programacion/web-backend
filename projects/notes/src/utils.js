@@ -1,3 +1,5 @@
+import uuid from 'uuid';
+
 let obj;
 
 const list = function(){
