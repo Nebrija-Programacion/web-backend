@@ -1,23 +1,7 @@
-import { getNotes } from './notes';
-import chalk from 'chalk';
 import yargs from 'yargs';
 import fs from 'fs';
 import uuid from 'uuid';
-
-
-let obj;
-
-const add = function(argv){
-  const nota = {
-    uuid: uuid.v4(),
-    title: argv.title,
-    body: argv.body,
-    author: argv.author,
-  };
-
-  obj.notes.push(nota);
-  console.log(`added: ${nota}`);
-}
+import {list, add, obj} from "./utils";
 
 // Create add command
 yargs.command({
@@ -43,6 +27,12 @@ yargs.command({
   handler: add,
 });
 
+yargs.command({
+  command: 'list',
+  describe: 'list notes',
+  handler: list,
+});
+
 
 const path = './notas.txt';
 fs.access(path, fs.F_OK, (err) => {
@@ -51,7 +41,6 @@ fs.access(path, fs.F_OK, (err) => {
   }
 
   const data = fs.readFileSync("notas.txt").toString();
-  console.log(`archivo: ${data}`);
 
   if(data !== ""){
     obj = JSON.parse(data);
@@ -65,7 +54,6 @@ fs.access(path, fs.F_OK, (err) => {
 
   yargs.parse();
   fs.writeFileSync("notas.txt", JSON.stringify(obj));
-  console.log("file saved");
 });
 
 
