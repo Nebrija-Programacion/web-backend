@@ -1,7 +1,27 @@
 import yargs from 'yargs';
 import fs from 'fs';
 import uuid from 'uuid';
-import {list, add, obj} from "./utils";
+
+
+let obj;
+
+const list = function(){
+  obj.notes.forEach( (note, i) => {
+    console.log(`${i}: ${note.title}`);
+  })
+}
+
+const add = function(argv){
+  const nota = {
+    uuid: uuid.v4(),
+    title: argv.title,
+    body: argv.body,
+    author: argv.author,
+  };
+
+  obj.notes.push(nota);
+  console.log(`Added: ${nota.title}`);
+}
 
 // Create add command
 yargs.command({
