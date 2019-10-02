@@ -2,10 +2,11 @@
   "name": "boiler_plate",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/app.js",
   "scripts": {
     "build": "babel src --out-dir dist",
-    "start": "nodemon --exec babel-node src/app.js",
+    "dev": "nodemon --watch src --exec 'npm run build && node dist/app.js'",
+    "start": "npm run build && node dist/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

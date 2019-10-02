@@ -22,3 +22,12 @@
   * [Argumentos por línea de comandos con yargs](https://www.npmjs.com/package/yargs)
   * Creación de objetos dinámicamente
   * [Actividad 1](./ejercicios/actividad1.md)
+
+## Sesión 4
+  * Corrección de la Actividad 1
+  * Programación asíncrona en Node.js
+  * Peticiones HTTP con el paquete [request](https://www.npmjs.com/package/request)
+  * Proyecto - aplicación del tiempo
+    * API [darksky](https://darksky.net/dev)
+    * API [mapbox](https://www.mapbox.com)
+  * [Actividad 2](./ejercicios/actividad2.md)
