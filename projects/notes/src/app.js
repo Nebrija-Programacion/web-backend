@@ -1,10 +1,27 @@
-import { name, add } from './utils';
-import { getNotes } from './notes';
-import chalk from 'chalk';
 import yargs from 'yargs';
 import fs from 'fs';
+import uuid from 'uuid';
 
-yargs.version('1.1.0');
+
+let obj;
+
+const list = function(){
+  obj.notes.forEach( (note, i) => {
+    console.log(`${i}: ${note.title}`);
+  })
+}
+
+const add = function(argv){
+  const nota = {
+    uuid: uuid.v4(),
+    title: argv.title,
+    body: argv.body,
+    author: argv.author,
+  };
+
+  obj.notes.push(nota);
+  console.log(`Added: ${nota.title}`);
+}
 
 // Create add command
 yargs.command({
@@ -27,53 +44,83 @@ yargs.command({
       type: 'string',
     },
   },
-  handler: function(argv) {
-    console.log('Adding new note:');
-    console.log(chalk.bold('Title:') + argv.title);
-    console.log(chalk.bold('Body:') + argv.body);
-    console.log(chalk.bold('Author:') + argv.author);
-  },
+  handler: add,
 });
 
-yargs.command({
-  command: 'remove',
-  describe: 'remove a note',
-  handler: function() {
-    console.log('Removing a note');
-  },
-});
-
-// Create add command
 yargs.command({
   command: 'list',
-  describe: 'list existing notes',
-  handler: function(argv) {
-    console.log(chalk.blue(`Listing notes`));
-  },
+  describe: 'list notes',
+  handler: list,
 });
 
-yargs.command({
-  command: 'read',
-  describe: 'read a note',
-  handler: function() {
-    console.log('Reading notes');
-  },
+
+const path = './notas.txt';
+fs.access(path, fs.F_OK, (err) => {
+  if (err) {
+    fs.writeFileSync("notas.txt","");
+  }
+
+  const data = fs.readFileSync("notas.txt").toString();
+
+  if(data !== ""){
+    obj = JSON.parse(data);
+  }else{
+    obj = {
+      notes: [
+
+      ]
+    };
+  }
+
+  yargs.parse();
+  fs.writeFileSync("notas.txt", JSON.stringify(obj));
 });
 
-yargs.parse();
 
-const obj = {
-  name: 'Alberto',
-  friends: ['Luis', 'Jorge', 'Maria'],
-};
 
-const str = JSON.stringify(obj);
-console.log(str);
+// yargs.parse();
 
-const obj2 = JSON.parse(str);
-console.log(obj2);
+// npm i --save yargs
 
-fs.writeFileSync('notes.txt', str);
-const obj3 = JSON.parse(fs.readFileSync('notes.txt').toString());
+// yargs.command({
+//   command: 'remove',
+//   describe: 'remove a note',
+//   handler: function() {
+//     console.log('Removing a note');
+//   },
+// });
 
-console.log(obj3);
+// // Create add command
+// yargs.command({
+//   command: 'list',
+//   describe: 'list existing notes',
+//   handler: function(argv) {
+//     console.log(chalk.blue(`Listing notes`));
+//   },
+// });
+
+// yargs.command({
+//   command: 'read',
+//   describe: 'read a note',
+//   handler: function() {
+//     console.log('Reading notes');
+//   },
+// });
+
+// yargs.parse();
+
+// const obj = {
+//   name: 'Alberto',
+//   friends: ['Luis', 'Jorge', 'Maria'],
+// };
+
+// const str = JSON.stringify(obj);
+// console.log(str);
+
+// const obj2 = JSON.parse(str);
+// console.log(obj2);
+
+// fs.writeFileSync('notes.txt', str);
+// const obj3 = JSON.parse(fs.readFileSync('notes.txt').toString());
+
+// console.log(obj3);
