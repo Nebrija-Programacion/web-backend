@@ -26,4 +26,5 @@ const fetchData = (url, data) => {
   });
 };
 
+// main program
 fetchData(url);
