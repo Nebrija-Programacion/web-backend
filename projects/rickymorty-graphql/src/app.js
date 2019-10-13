@@ -1,4 +1,4 @@
-import request from 'request';
+import { fetchData } from './fetchdata';
 
 // rickymorty entry point
 const url = 'https://rickandmortyapi.com/api/character/';
@@ -13,18 +13,5 @@ const runApp = data => {
   });
 };
 
-const fetchData = (url, data) => {
-  if (!data) data = [];
-  console.log('fechting data...');
-  request({ url, json: true }, (error, response) => {
-    if (response.body) {
-      data = [...data, ...response.body.results];
-    }
-    if (response.body.info.next !== '')
-      fetchData(response.body.info.next, data);
-    else runApp(data);
-  });
-};
-
 // main program
-fetchData(url);
+fetchData(runApp, url);
