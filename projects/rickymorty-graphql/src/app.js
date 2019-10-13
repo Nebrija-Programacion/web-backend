@@ -1,4 +1,5 @@
 import { fetchData } from './fetchdata';
+import { getCharacter, getByStatus, getByPage } from './utils';
 import { GraphQLServer } from 'graphql-yoga';
 
 // rickymorty entry point
@@ -9,10 +10,6 @@ const url = 'https://rickandmortyapi.com/api/character/';
  * @param data all rickyandmorty database
  */
 const runServer = (data, typeDefs, resolvers) => {
-  data.forEach(element => {
-    console.log(`${element.id}: ${element.name}`);
-  });
-
   const server = new GraphQLServer({
     typeDefs,
     resolvers,
@@ -27,18 +24,54 @@ const main = data => {
   // Type definions (schema)
   const typeDefs = `
     type Query {
-      hello: String!
+      info: Info!
+      character(id:ID!): Character
+      characters(status:String, name: String, page:Int, pageSize: Int): [Character]!
+    }
+
+    type Info {
+      total: Int!
+      pages: Int!
+    }
+
+    type Character {
+      id: ID!
+      name: String!
+      status: String!
+      planet: String!
     }
   `;
 
   // Resolvers
   const resolvers = {
     Query: {
-      hello() {
-        return 'Hello world!';
+      info() {
+        return {
+          total: data.length,
+          pages: Math.ceil(data.length / 20),
+        };
+      },
+
+      character(parent, args, ctx, info) {
+        return getCharacter(args.id, data);
+      },
+
+      characters(parent, args, ctx, info) {
+        const page = args.page || 1;
+        console.log(args.pageSize);
+        const pageSize = args.pageSize || 20;
+        console.log(pageSize);
+        let filteredData = data;
+
+        if (args.status) {
+          filteredData = getByStatus(args.status, data);
+        }
+
+        return getByPage(filteredData, pageSize, page);
       },
     },
   };
+
   return runServer(data, typeDefs, resolvers);
 };
 
