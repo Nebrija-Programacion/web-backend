@@ -31,3 +31,14 @@
     * API [darksky](https://darksky.net/dev)
     * API [mapbox](https://www.mapbox.com)
   * [Actividad 2](./ejercicios/actividad2.md)
+
+## Sesión 5
+  * API GraphQL
+    * Definción de tipos en GraphQL
+      * Tipos básicos.
+      * Tipos complejos.
+    * Queries básicas no vinculadas - Devolución de tipos básicos.
+    * Queries complejas no vinculadas - Devolución de tipos complejos.
+    * Queries con argumentos (obligatorios y opcionales).
+    * Devolución de `arrays`
+      
