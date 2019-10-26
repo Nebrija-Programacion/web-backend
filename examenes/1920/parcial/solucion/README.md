@@ -1,9 +1,9 @@
-#Solución examen Parcial
+# Solución examen Parcial
 
-##Install
+## Install
 `npm install`
 
-##Run
+## Run
 `npm start`
 
 GraphQL server will listen on `127.0.0.1:4000`
