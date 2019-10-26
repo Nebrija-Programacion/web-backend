@@ -50,11 +50,9 @@ const runApp = function(peopleData, filmsData) {
 
         if (args.gender) {
           result = result.filter(
-            obj > obj.gender.toUpperCase() === args.gender.toUpperCase()
+            obj => obj.gender.toUpperCase() === args.gender.toUpperCase()
           );
         }
-
-        console.log(`init ${init} end: ${end}`);
 
         const people = result.slice(init, end).map((character, index) => {
           return {

@@ -11,7 +11,6 @@ const getFilmsInfo = function(films, filmsData) {
     };
   });
 
-  console.log(result);
   return result;
 };
 
