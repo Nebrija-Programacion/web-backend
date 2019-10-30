@@ -1,46 +1,46 @@
 #Práctica II
 
-Se desea crear una API GraphQL para una aplicación de blogging. La aplicacón contendrá:
+Se desea crear una API GraphQL para un recetario. La aplicacón contendrá:
 
-**Posts** que contienen:
+**Recetas** que contienen:
   * Título
-  * Contenido
-  * Fecha
+  * Descripción
+  * Fecha de introducción
   * Autor
-  * Comentarios
+  * Ingredientes
 
 **Autores**:
   * Nombre
   * e-mail.
-  * Lista de Posts
+  * Lista de recetas
 
-**Comentarios**
-  * Texto
-  * Autor
-  * Post al que pertenecen
+**Ingredientes**
+  * Nombre
+  * Recetas en los que aparecen.
 
 
 ## Paso I (3 puntos)
 
 Crear las mutaciones necesarias para poder añadir:
+  * Recetas.
   * Autores.
-  * Posts.
-  * Comentarios.
+  * Ingredientes.
 
 ## Paso II (4 puntos)
 
 Crear las queries necesarias para poder consultar:
-  * Lista de posts.
+  * Lista de recetas.
   * Lista de autores.
-  * Posts de un autor específico.
-  * Comentarios de un post.
+  * Lista de ingredientes.
+  * Recetas de un autor específico.
+  * Recetas que contienen un ingrediente específico.
 
 ## Paso III (3 puntos)
 
 Crear las mutaciones necesarias para poder:
-  * Borrar un post.
+  * Borrar una receta.
   * Borrar un autor.
-  * Borrar un comentarios.
+  * Borrar un ingrediente.
   * Actualizar datos de un autor.
-  * Actualizar datos de un post.
-  * Actualizar datos de un comentario.
+  * Actualizar datos de una receta.
+  * Actualizar datos de un ingrediente.
