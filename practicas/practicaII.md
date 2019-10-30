@@ -26,7 +26,7 @@ Crear las mutaciones necesarias para poder añadir:
   * Autores.
   * Ingredientes.
 
-## Paso II (4 puntos)
+## Paso II (3 puntos)
 
 Crear las queries necesarias para poder consultar:
   * Lista de recetas.
@@ -35,12 +35,12 @@ Crear las queries necesarias para poder consultar:
   * Recetas de un autor específico.
   * Recetas que contienen un ingrediente específico.
 
-## Paso III (3 puntos)
+## Paso III (4 puntos)
 
 Crear las mutaciones necesarias para poder:
   * Borrar una receta.
-  * Borrar un autor.
-  * Borrar un ingrediente.
+  * Borrar un autor. Al borrar un autor, se borran todas sus recetas.
+  * Borrar un ingrediente. Al borrar un ingrediente, se borran todas las recetas que lo contengan.
   * Actualizar datos de un autor.
   * Actualizar datos de una receta.
   * Actualizar datos de un ingrediente.
