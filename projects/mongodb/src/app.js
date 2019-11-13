@@ -8,25 +8,33 @@ const client = new MongoClient(uri, {
   useUnifiedTopology: true
 });
 
-const databaseName = "blog";
-const id = new ObjectID();
-console.log(id);
-console.log(id.getTimestamp());
-
-client.connect(async err => {
-  if (err) {
-    return console.log(`Error connecting to ${uri}`);
-  }
-  console.log("Connected!");
-  const db = client.db(databaseName);
-  const collection = db.collection("authors");
-  const result = await collection.insertOne({
-    name: "Alberto",
-    age: 41
-  });
-
-  console.log(result.ops);
-
-  // perform actions on the collection object
-  client.close();
+console.log(1);
+const promise = new Promise((resolve, reject) => {
+  setTimeout(() => resolve("hola"), 2000);
 });
+
+promise.then(message => console.log(message));
+
+console.log(2);
+// const databaseName = "blog";
+// const id = new ObjectID();
+// console.log(id);
+// console.log(id.getTimestamp());
+
+// client.connect(async err => {
+//   if (err) {
+//     return console.log(`Error connecting to ${uri}`);
+//   }
+//   console.log("Connected!");
+//   const db = client.db(databaseName);
+//   const collection = db.collection("authors");
+//   const result = await collection.insertOne({
+//     name: "Alberto",
+//     age: 41
+//   });
+
+//   console.log(result.ops);
+
+//   // perform actions on the collection object
+//   client.close();
+// });
