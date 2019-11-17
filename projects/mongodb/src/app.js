@@ -1,4 +1,4 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectID } from "mongodb";
 import { GraphQLServer } from "graphql-yoga";
 
 import "babel-polyfill";
@@ -31,7 +31,8 @@ const connectToDb = async function(usr, pwd, url) {
 const runGraphQLServer = function(context) {
   const typeDefs = `
     type Query{
-      ok: Boolean!
+      getAuthor(id: ID!): Author
+      getAuthors: [Author]!
     }
 
     type Mutation{
@@ -47,9 +48,22 @@ const runGraphQLServer = function(context) {
 
   const resolvers = {
     Query: {
-      ok: () => true
+      getAuthor: async (parent, args, ctx, info) => {
+        const { id } = args;
+        const { client } = ctx;
+        const db = client.db("blog");
+        const collection = db.collection("authors");
+        const result = await collection.findOne({ _id: ObjectID(id) });
+        return result;
+      },
+      getAuthors: async (parent, args, ctx, info) => {
+        const { client } = ctx;
+        const db = client.db("blog");
+        const collection = db.collection("authors");
+        const result = await collection.find({}).toArray();
+        return result;
+      }
     },
-
     Mutation: {
       addAuthor: async (parent, args, ctx, info) => {
         const { name, age } = args;
@@ -70,7 +84,7 @@ const runGraphQLServer = function(context) {
 
   const server = new GraphQLServer({ typeDefs, resolvers, context });
   const options = {
-    port: 4000
+    port: 8000
   };
 
   try {
@@ -81,14 +95,18 @@ const runGraphQLServer = function(context) {
     );
   } catch (e) {
     console.info(e);
+    server.close();
   }
 };
 
 const runApp = async function() {
   const client = await connectToDb(usr, pwd, url);
   console.log("Connect to Mongo DB");
-
-  runGraphQLServer({ client });
+  try {
+    runGraphQLServer({ client });
+  } catch (e) {
+    client.close();
+  }
 };
 
 runApp();
