@@ -3,7 +3,7 @@ import * as uuid from "uuid";
 
 import { GraphQLServer } from "graphql-yoga";
 
-let receiptsData = [
+let recipesData = [
   {
     id: "1",
     title: "Tarta de queso",
@@ -42,10 +42,10 @@ let ingredientsData = [
   }
 ];
 
-const runApp = function(receiptsData, ingredientData, authorsData) {
+const runApp = function(recipesData, ingredientData, authorsData) {
   const typeDefs = `
     type Query {
-      receipts: [Receipt!]
+      recipes: [Recipe!]
       authors: [Author!]
       ingredients: [Ingredient!]
     }
@@ -53,16 +53,16 @@ const runApp = function(receiptsData, ingredientData, authorsData) {
     type Mutation {
       addAuthor(name: String!, email: String!): Author!
       addIngredient(name: String!): Ingredient!
-      addReceipt(title: String!, description: String!, author: ID!, ingredients: [ID!]): Receipt!
+      addRecipe(title: String!, description: String!, author: ID!, ingredients: [ID!]): Recipe!
       removeAuthor(id: ID!): Author
-      removeReceipt(id: ID!): Receipt
+      removeRecipe(id: ID!): Recipe
       removeIngredient(id: ID!): Ingredient
       updateIngredient(id: ID!, name: String!): Ingredient!
       updateAuthor(id: ID!, name: String, email: String): Author!
-      udpateReceipt(id:ID!, title: String, description: String, author: ID, ingredients: [ID!]): Receipt!
+      udpateRecipe(id:ID!, title: String, description: String, author: ID, ingredients: [ID!]): Recipe!
     }
 
-    type Receipt {
+    type Recipe {
       id: ID!
       title: String!
       description: String!
@@ -75,21 +75,21 @@ const runApp = function(receiptsData, ingredientData, authorsData) {
       id: ID!
       name: String!
       email: String!
-      receipts: [Receipt!]
+      recipes: [Recipe!]
     }
 
     type Ingredient {
       id: ID!
       name: String!
-      receipts: [Receipt!]
+      recipes: [Recipe!]
 
     }
   `;
 
   const resolvers = {
     Query: {
-      receipts: (parent, args, ctx, info) => {
-        return receiptsData;
+      recipes: (parent, args, ctx, info) => {
+        return recipesData;
       },
       authors: (parent, args, ctx, info) => {
         return authorsData;
@@ -126,7 +126,7 @@ const runApp = function(receiptsData, ingredientData, authorsData) {
         return ingredient;
       },
 
-      addReceipt: (parent, args, ctx, info) => {
+      addRecipe: (parent, args, ctx, info) => {
         const { title, description, author, ingredients } = args;
         if (!authorsData.some(obj => obj.id === author))
           throw new Error(`Unknown author ${author}`);
@@ -141,7 +141,7 @@ const runApp = function(receiptsData, ingredientData, authorsData) {
         const month = date.getMonth() + 1;
         const year = date.getFullYear();
 
-        const receipt = {
+        const recipe = {
           title,
           description,
           author,
@@ -150,22 +150,22 @@ const runApp = function(receiptsData, ingredientData, authorsData) {
           date: `${day}/${month}/${year}`
         };
 
-        receiptsData.push(receipt);
-        return receipt;
+        recipesData.push(recipe);
+        return recipe;
       },
 
-      removeReceipt: (parent, args, ctx, info) => {
-        const receipt = receiptsData.find(obj => obj.id === args.id);
-        if (receipt) receiptsData.splice(receiptsData.indexOf(receipt), 1);
-        return receipt;
+      removeRecipe: (parent, args, ctx, info) => {
+        const recipe = recipesData.find(obj => obj.id === args.id);
+        if (recipe) recipesData.splice(recipesData.indexOf(recipe), 1);
+        return recipe;
       },
 
       removeAuthor: (parent, args, ctx, info) => {
         const author = authorsData.find(obj => obj.id === args.id);
         if (author) {
           authorsData.splice(authorsData.indexOf(author), 1);
-          receiptsData = receiptsData.filter(
-            receipt => receipt.author !== author.id
+          recipesData = recipesData.filter(
+            recipe => recipe.author !== author.id
           );
         }
 
@@ -176,8 +176,8 @@ const runApp = function(receiptsData, ingredientData, authorsData) {
         const ingredient = ingredientsData.find(obj => obj.id === args.id);
         if (ingredient) {
           ingredientsData.splice(ingredientsData.indexOf(ingredients), 1);
-          receiptsData = receiptsData.filter(receipt =>
-            receipt.ingredients.includes(ingredient.id)
+          recipesData = recipesData.filter(recipe =>
+            recipe.ingredients.includes(ingredient.id)
           );
         }
 
@@ -206,23 +206,23 @@ const runApp = function(receiptsData, ingredientData, authorsData) {
         return author;
       },
 
-      udpateReceipt: (parent, args, ctx, info) => {
+      udpateRecipe: (parent, args, ctx, info) => {
         const { id, title, description, author, ingredients } = args;
-        const receipt = receiptsData.find(obj => obj.id === id);
-        if (!receipt) {
-          throw new Error(`Receipt with id ${id} not found`);
+        const recipe = recipesData.find(obj => obj.id === id);
+        if (!recipe) {
+          throw new Error(`Recipe with id ${id} not found`);
         }
 
-        receipt.title = title || receipt.title;
-        receipt.description = description || receipt.description;
-        receipt.author = author || receipt.author;
-        receipt.ingredients = ingredients || receipt.ingredients;
+        recipe.title = title || recipe.title;
+        recipe.description = description || recipe.description;
+        recipe.author = author || recipe.author;
+        recipe.ingredients = ingredients || recipe.ingredients;
 
-        return receipt;
+        return recipe;
       }
     },
 
-    Receipt: {
+    Recipe: {
       author: (parent, args, ctx, info) => {
         return authorsData.find(obj => obj.id === parent.author);
       },
@@ -234,15 +234,15 @@ const runApp = function(receiptsData, ingredientData, authorsData) {
     },
 
     Author: {
-      receipts: (parent, args, ctx, info) => {
-        return receiptsData.filter(obj => obj.author === parent.id);
+      recipes: (parent, args, ctx, info) => {
+        return recipesData.filter(obj => obj.author === parent.id);
       }
     },
 
     Ingredient: {
-      receipts: (parent, args, ctx, info) => {
-        return receiptsData.filter(receipt =>
-          receipt.ingredients.includes(parent.id)
+      recipes: (parent, args, ctx, info) => {
+        return recipesData.filter(recipe =>
+          recipe.ingredients.includes(parent.id)
         );
       }
     }
@@ -266,4 +266,4 @@ const runApp = function(receiptsData, ingredientData, authorsData) {
 };
 
 // Fetch Data and then run app
-runApp(receiptsData, ingredientsData, authorsData);
+runApp(recipesData, ingredientsData, authorsData);
