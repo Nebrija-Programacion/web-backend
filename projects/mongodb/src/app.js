@@ -60,7 +60,7 @@ const runGraphQLServer = function(context) {
         const { client } = ctx;
         const db = client.db("blog");
         const collection = db.collection("authors");
-        const result = await collection.find({}).toArray();
+        const result = await collection.find().toArray();
         return result;
       }
     },
