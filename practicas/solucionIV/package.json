@@ -1,0 +1,28 @@
+{
+  "name": "boiler_plate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.js",
+  "scripts": {
+    "build": "babel src --out-dir dist",
+    "dev": "nodemon --watch src --exec 'npm run build && node dist/app.js'",
+    "start": "npm run build && node dist/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.6.0",
+    "@babel/core": "^7.6.0",
+    "@babel/node": "^7.6.1",
+    "@babel/preset-env": "^7.6.0",
+    "nodemon": "^1.19.2"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "graphql-yoga": "^1.18.3",
+    "mongodb": "^3.3.5",
+    "uuid": "^3.3.3"
+  }
+}

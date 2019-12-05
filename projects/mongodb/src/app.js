@@ -31,38 +31,70 @@ const connectToDb = async function(usr, pwd, url) {
 const runGraphQLServer = function(context) {
   const typeDefs = `
     type Query{
-      getAuthor(id: ID!): Author
-      getAuthors: [Author]!
+      getAuthor(_id: ID!): Author
+      getAuthors: [Author!]
+      getPosts: [Post!]
+      getPost(_id: ID!): Post
     }
 
     type Mutation{
       addAuthor(name: String!, age: Int!):Author!
+      addPost(title: String!, body: String!, author: ID!):Post!
+
+      removeAuthor(_id: ID!): Author
+      removePost(_id: ID!): Post
+
+      updateAuthor(_id: ID!, name: String, age: Int):Author
+      updatePost(_id: ID!, title: String, body: String, author: ID):Post
     }
 
     type Author{
-      id: ID!
+      _id: ID!
       name: String!
       age: Int!
+      posts: [Post!]
+    }
+
+    type Post{
+      _id: ID!
+      author: Author!
+      title: String!
+      body: String!
     }
     `;
 
   const resolvers = {
+    Author:{
+      posts: async (parent, args, ctx, info) => {
+        const ids = parent.posts;
+        const db = ctx.db;
+        const collection = db.collection("posts");
+
+        const query = {_id : {$in: ids}};
+        return collection.find(query).toArray();
+      }
+    },
+
     Query: {
       getAuthor: async (parent, args, ctx, info) => {
-        const { id } = args;
-        const { client } = ctx;
-        const db = client.db("blog");
+        const { _id } = args;
+        // _id = args._id;
+        const { db } = ctx;
         const collection = db.collection("authors");
-        const result = await collection.findOne({ _id: ObjectID(id) });
-        return result;
+        const result = await collection.findOne({ _id: ObjectID(_id) });
+        if(result) return result;
+        throw new Error("Author not found");
       },
+
       getAuthors: async (parent, args, ctx, info) => {
         const { client } = ctx;
         const db = client.db("blog");
         const collection = db.collection("authors");
-        const result = await collection.find().toArray();
-        return result;
-      }
+        return collection.find().toArray();
+      },
+
+      
+
     },
     Mutation: {
       addAuthor: async (parent, args, ctx, info) => {
@@ -103,10 +135,11 @@ const runApp = async function() {
   const client = await connectToDb(usr, pwd, url);
   console.log("Connect to Mongo DB");
   try {
-    runGraphQLServer({ client });
+    runGraphQLServer({ client, db: client.db("blog") });
   } catch (e) {
     client.close();
   }
 };
 
-runApp();
+await runApp();
+console.log("Hola");
