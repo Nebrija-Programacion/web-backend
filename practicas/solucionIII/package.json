@@ -1,0 +1,31 @@
+{
+  "name": "SolucionParcial",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.js",
+  "scripts": {
+    "build": "babel src --out-dir dist",
+    "dev": "nodemon --watch src --wath src/schema.gql --exec 'npm run build && node dist/app.js'",
+    "start": "npm run build && node dist/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.10.1",
+    "@babel/core": "^7.10.2",
+    "@babel/node": "^7.10.1",
+    "@babel/preset-env": "^7.10.2",
+    "babel-polyfill": "^6.26.0",
+    "nodemon": "^1.19.4"
+  },
+  "dependencies": {
+    "apollo-server": "^2.14.1",
+    "dotenv": "^8.2.0",
+    "graphql-yoga": "^1.18.3",
+    "mongodb": "^3.5.8",
+    "request": "^2.88.2",
+    "uuid": "^3.4.0"
+  }
+}
