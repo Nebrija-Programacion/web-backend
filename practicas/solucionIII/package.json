@@ -21,7 +21,7 @@
     "nodemon": "^1.19.4"
   },
   "dependencies": {
-    "apollo-server": "^2.14.1",
+    "apollo-server": "^2.14.2",
     "dotenv": "^8.2.0",
     "graphql-yoga": "^1.18.3",
     "mongodb": "^3.5.8",
