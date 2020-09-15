@@ -1,6 +1,6 @@
 ## Sessions Index
 
-  * [Session 1](sesiones/session1.md)
+  * [Session 1](sessions/session1.md)
 
 ## Bibliography
 
