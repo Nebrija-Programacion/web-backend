@@ -1,6 +1,7 @@
 ## Sessions Index
 
   * [Session 1](sessions/session1.md)
+  * [Session 2](sessions/session2.md)
 
 ## Bibliography
 
@@ -12,4 +13,5 @@
 ### Books  
   * [Eloquent Javascript, 3rd Edition: A Modern Introduction to Programming](https://eloquentjavascript.net/)
   * [You don't know JavaScript Yet Series](https://github.com/getify/You-Dont-Know-JS)
+  * [Functional Light JavaScript](https://github.com/getify/Functional-Light-JS)
   * [TypeScript HandBook](https://www.typescriptlang.org/docs/handbook/intro.html)
