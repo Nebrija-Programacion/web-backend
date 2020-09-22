@@ -1,6 +1,6 @@
 ## More on functions
 
-[Functional Light JavaScript](https://github.com/getify/Functional-Light-JS)
+From de book [Functional Light JavaScript](https://github.com/getify/Functional-Light-JS)
 
   * Chapter 1: Why Functional Programming?
   * Chapter 2: The Nature Of Functions
