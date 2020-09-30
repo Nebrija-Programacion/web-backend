@@ -2,6 +2,7 @@
 
   * [Session 1](sessions/session1.md)
   * [Session 2](sessions/session2.md)
+  * [Session 3](sessions/session3.md)
 
 ## Bibliography
 
