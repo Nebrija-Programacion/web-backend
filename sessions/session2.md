@@ -1,3 +1,5 @@
+# Session 2
+
 ## More on functions
 
 From de book [Functional Light JavaScript](https://github.com/getify/Functional-Light-JS)
