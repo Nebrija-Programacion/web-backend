@@ -4,6 +4,7 @@
   * [Session 2](sessions/session2.md)
   * [Session 3](sessions/session3.md)
   * [Session 4](sessions/session4.md)
+  * [Session 5](sessions/session5.md)
 
 ## Bibliography
 
