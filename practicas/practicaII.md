@@ -1,4 +1,4 @@
-# Practica I
+# Practica II
 
 Se pide realizar una API REST utilizando `Deno` y el servidor `oak`. La práctica debe trabajar con una base de datos Mongo alojada en Mongo Atlas.
 
