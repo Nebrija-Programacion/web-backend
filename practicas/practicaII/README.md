@@ -35,7 +35,7 @@ Devuelve un objeto con todos los personajes de la serie
 }
 ``` 
 
-## GET /character/:id
+## GET /characters/:id
 Devuelve un objeto con los datos del personaje con id
 `Status`: 200
 `Body`: objecto con el personaje con el formato del siguiente ejemplo.
