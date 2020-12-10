@@ -38,6 +38,6 @@ const getInvoice = async (ctx: IContext) => {
   ctx.response.body = {
     client,
     products,
-    price
+    price,
   }
 }
