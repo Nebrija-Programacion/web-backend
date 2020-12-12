@@ -5,7 +5,7 @@ import {
   GQLError,
 } from "https://deno.land/x/oak_graphql@0.6.2/mod.ts";
 
-import { TaskSchema } from "../mongo/schema.ts";
+import { TaskSchema, UserSchema } from "../mongo/schema.ts";
 
 import { IContext, ITask } from "../types.ts";
 
@@ -69,6 +69,49 @@ const Query = {
     }
   },
 
+  getMyTasks: async (parent: any, args: any, ctx: IContext) => {
+    try {
+      const db: Database = ctx.db;
+      const email: string = ctx.user.email;
+      const tasksCollection = db.collection<TaskSchema>("Tasks");
+      const tasks = await tasksCollection.find({
+        $or: [{ assignee: email }, { reporter: email }],
+      });
+      const result = tasks.map((t) => {
+        return {
+          ...t,
+          date: t.date.toString(),
+        };
+      });
+      return result;
+    } catch (e) {
+      throw new GQLError(e);
+    }
+  },
+
+  getMyOpenTasks: async (parent: any, args: any, ctx: IContext) => {
+    try {
+      const db: Database = ctx.db;
+      const email: string = ctx.user.email;
+      const tasksCollection = db.collection<TaskSchema>("Tasks");
+      const tasks = await tasksCollection.find({
+        $and: [
+          { status: { $ne: "DONE" } },
+          { $or: [{ assignee: email }, { reporter: email }] },
+        ],
+      });
+      const result = tasks.map((t) => {
+        return {
+          ...t,
+          date: t.date.toString(),
+        };
+      });
+      return result;
+    } catch (e) {
+      throw new GQLError(e);
+    }
+  },
+
   getTaskByStatus: async (
     parent: any,
     args: IGetTaskByStatusArgs,
@@ -114,6 +157,16 @@ const Query = {
           date: t.date.toString(),
         };
       });
+    } catch (e) {
+      throw new GQLError(e);
+    }
+  },
+
+  getUsers: async (parent: any, args: any, ctx: IContext) => {
+    try {
+      const db: Database = ctx.db;
+      const users = await db.collection<UserSchema>("Users").find();
+      return users;
     } catch (e) {
       throw new GQLError(e);
     }

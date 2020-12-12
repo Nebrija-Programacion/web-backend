@@ -13,6 +13,7 @@ interface IAddTaskArgs {
     month: number;
     day: number;
     status: string;
+    assignee: string;
   }
 }
 
@@ -54,13 +55,15 @@ const Mutation = {
       const found = await tasksCollection.findOne({ id: args.task.id });
       if (found) throw new GQLError("task with id already in DB");
 
-      const { name, description, id, status, year, day, month } = args.task;
+      const { name, description, id, status, year, day, month, assignee } = args.task;
       const task = {
         name,
         description,
         id,
         status,
+        assignee,
         date: new Date(year, month, day),
+        reporter: ctx.user.email,
       };
       await tasksCollection.insertOne(task);
       return true;

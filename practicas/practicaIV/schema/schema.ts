@@ -3,7 +3,6 @@ import { gql } from "https://deno.land/x/oak_graphql@0.6.2/mod.ts";
 const Schema = gql`
   type User {
     email: String!
-    name: String!
     token: String!
     assignee: [Task!]!
     reporter: [Task!]!
@@ -27,8 +26,7 @@ const Schema = gql`
     month: Int!
     day: Int!
     status: String!
-    assignee_mail: String!
-    reporter_mail: String!
+    assignee: String!
   }
 
   type Query {
