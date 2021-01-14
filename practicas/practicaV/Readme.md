@@ -17,7 +17,7 @@ Cada entra del blog además tendrá comentarios, que tendrán:
  * Autor del comentario.
 
 La funcionalidad que ofrece la API es la siguiente:
- * Crear y borrar usuarios (indicando el role). Solo lo pueden hacer los ADMIN.
+ * Crear y borrar usuarios (indicando los roles). Solo lo pueden hacer los ADMIN.
  * Crear posts. Lo pueden hacer los AUTHOR (también puede borrar los suyos, pero no los de otros)
  * Borrar posts. Los EDITOR pueden borrar cualquier post.
  * Leer posts. Lo puede hacer cualquiera. _getPosts_
