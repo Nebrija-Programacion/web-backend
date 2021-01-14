@@ -184,7 +184,7 @@ const Mutation = {
     parent: any,
     args: { email: string; password: string },
     ctx: IContext
-  ): Promise<boolean> => {
+  ):Promise<Boolean> => {
     try {
       const exists = await ctx.db
         .collection<UserSchema>("Users")
@@ -215,6 +215,11 @@ const Mutation = {
         await ctx.db
           .collection<UserSchema>("Users")
           .updateOne({ email: args.email }, { $set: { token } });
+        setTimeout(() => {
+          ctx.db
+            .collection<UserSchema>("Users")
+            .updateOne({ email: args.email }, { $set: { token: "" } });
+        }, 60 * 60 * 1000);
         return token;
       } else {
         throw new GQLError("User and password do not match");

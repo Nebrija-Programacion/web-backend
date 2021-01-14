@@ -37,6 +37,7 @@ try {
   app.use(async (ctx, next) => {
     const value = await ctx.request.body().value;
     // it allows launching of graphql playground
+
     if (!value || value.operationName === "IntrospectionQuery") {
       await next();
     } else {
@@ -45,9 +46,8 @@ try {
         await next();
       } else {
         const token = ctx.request.headers.get("token") || "none";
-        const email = ctx.request.headers.get("email") || "none";
         console.log(token);
-        const user = await db.collection<UserSchema>("Users").findOne({ token, email });
+        const user = await db.collection<UserSchema>("Users").findOne({ token });
         if (user) {
           ctx.state.user = user;
           await next();
