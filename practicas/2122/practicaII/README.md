@@ -22,7 +22,7 @@ Devuelve un objeto con todos los personajes de la serie
 
 `Body`: Array de personajes, cada personaje con el formato del siguiente ejemplo.
 
-```json
+``` 
 
 {
 
@@ -50,7 +50,7 @@ Devuelve un objeto con los datos del personaje con id
 `Status`: 200
 `Body`: objecto con el personaje con el formato del siguiente ejemplo.
 
-```json
+``` 
 {
 id: 1,
 name: "Nombre der personaje",
@@ -81,7 +81,7 @@ Si lo realiza correctamente (el personaje existe)
 `Status`: 200
 `Body`: objecto con el personaje con el formato del siguiente ejemplo.
 
-```json
+``` 
 {
 id: 1,
 name: "Nombre der personaje",
