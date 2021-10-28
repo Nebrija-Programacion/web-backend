@@ -7,7 +7,17 @@ const run = async () => {
     const data: { next: string; characters: Character[] } = await getCharacters(
       next
     );
-    const characters = data.characters;
+    const characters = data.characters.map((char) => {
+      const { id, name, status, species, episode } = char;
+      return {
+        id,
+        name,
+        status,
+        species,
+        episode,
+      };
+    });
+
     // ADD CHARACTERS HERE TO THE DATABASE, AND GO FOR THE NEXT PAGE
     next = data.next;
     console.log(next);
