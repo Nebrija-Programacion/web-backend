@@ -6,8 +6,7 @@
   "scripts": {
     "start": "ts-node ./src/server.ts",
     "dev": "nodemon --watch src/**/* -e ts,json --exec node -r ts-node/register ./src/app.ts",
-    "dev-inspect": "nodemon --watch src/**/* -e ts,json --exec node --inspect-brk -r ts-node/register src/app.ts",
-    "prod": "npm run start"
+    "dev-inspect": "nodemon --watch src/**/* -e ts,json --exec node --inspect-brk -r ts-node/register src/app.ts"
   },
   "keywords": [],
   "author": "",
