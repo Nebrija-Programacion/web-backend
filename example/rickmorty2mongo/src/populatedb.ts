@@ -6,7 +6,9 @@ export const getAndSaveRickyMortyCharacters = async (): Promise<Db> => {
   const dbName: string = "RickyMorty";
   const collection: string = "Characters";
 
-  const mongouri: string = `mongodb+srv://avalero:nebrija@cluster-nebrija.gcxdd.gcp.mongodb.net/${dbName}?retryWrites=true&w=majority`;
+  const usr = "avalero";
+  const pwd = "******";
+  const mongouri: string = `mongodb+srv://${usr}:${pwd}@cluster-nebrija.gcxdd.gcp.mongodb.net/${dbName}?retryWrites=true&w=majority`;
 
   const client = new MongoClient(mongouri);
 
