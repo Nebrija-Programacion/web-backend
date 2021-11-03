@@ -8,6 +8,11 @@ const run = async () => {
   const app = express();
   app.set("db", db);
 
+  app.use((req, res, next) => {
+    console.log(req.query.token || "No token");
+    console.log(req.headers["auth-token"]);
+    next();
+  });
   app.get("/status", async (req, res) => {
     res.status(200).send("Todo OK");
   });
