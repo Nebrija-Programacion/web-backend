@@ -40,7 +40,12 @@ export const getCharacters = async (
         const episodes: Episode[] = await getEpisodes(charAPI.episode);
         return {
           ...charAPI,
-          episode: episodes,
+          episode: episodes.map((epi) => {
+            return {
+              name: epi.name,
+              episode: epi.episode,
+            };
+          }),
         };
       })
     );

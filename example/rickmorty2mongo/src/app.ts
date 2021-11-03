@@ -1,27 +1,23 @@
-import { getCharacters } from "./rickmortyapi";
-import { Character } from "./types";
+import { Db } from "mongodb";
+import { getAndSaveRickyMortyCharacters } from "./populatedb";
+import express from "express";
+import { character, characters } from "./resolvers";
 
 const run = async () => {
-  let next: string = "https://rickandmortyapi.com/api/character";
-  while (next) {
-    const data: { next: string; characters: Character[] } = await getCharacters(
-      next
-    );
-    const characters = data.characters.map((char) => {
-      const { id, name, status, species, episode } = char;
-      return {
-        id,
-        name,
-        status,
-        species,
-        episode,
-      };
-    });
+  const db: Db = await getAndSaveRickyMortyCharacters();
+  const app = express();
+  app.set("db", db);
 
-    // ADD CHARACTERS HERE TO THE DATABASE, AND GO FOR THE NEXT PAGE
-    next = data.next;
-    console.log(next);
-  }
+  app.get("/status", async (req, res) => {
+    res.status(200).send("Todo OK");
+  });
+
+  app.get("/characters", characters);
+  app.get("/character/:id", character);
+
+  //app.get("/character/:id", character);
+
+  await app.listen(3000);
 };
 
 try {
