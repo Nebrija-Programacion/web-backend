@@ -25,7 +25,7 @@ export const freeSeats = async (req: Request, res: Response) => {
   const collection = db.collection("seats");
 
   if (!req.query) {
-    return res.status(400).send("No params");
+    return res.status(500).send("No params");
   }
 
   const { day, month, year } = req.query as {
@@ -35,11 +35,11 @@ export const freeSeats = async (req: Request, res: Response) => {
   };
 
   if (!day || !month || !year) {
-    return res.status(400).send("Missing day, month or year");
+    return res.status(500).send("Missing day, month or year");
   }
 
   if (!checkDateValidity(day, month, year)) {
-    return res.status(400).send("Invalid day, month or year");
+    return res.status(500).send("Invalid day, month or year");
   }
 
   const seats = await collection.find({ day, month, year }).toArray();
@@ -57,7 +57,7 @@ export const book = async (req: Request, res: Response) => {
   const db: Db = req.app.get("db");
   const collection = db.collection("seats");
   if (!req.query) {
-    return res.status(400).send("No params");
+    return res.status(500).send("No params");
   }
 
   const { day, month, year, number } = req.query as {
@@ -68,16 +68,16 @@ export const book = async (req: Request, res: Response) => {
   };
 
   if (!day || !month || !year || !number) {
-    return res.status(400).send("Missing day, month or year or seat number");
+    return res.status(500).send("Missing day, month or year or seat number");
   }
 
   if (!checkDateValidity(day, month, year)) {
-    return res.status(400).send("Invalid day, month or year");
+    return res.status(500).send("Invalid day, month or year");
   }
 
   const notFree = await collection.findOne({ day, month, year, number });
   if (notFree) {
-    return res.status(400).send("Seat is not free");
+    return res.status(500).send("Seat is not free");
   }
 
   const token = uuid();
@@ -90,7 +90,7 @@ export const free = async (req: Request, res: Response) => {
   const db: Db = req.app.get("db");
   const collection = db.collection("seats");
   if (!req.query) {
-    return res.status(400).send("No params");
+    return res.status(500).send("No params");
   }
 
   const { day, month, year } = req.query as {
@@ -103,12 +103,12 @@ export const free = async (req: Request, res: Response) => {
 
   if (!day || !month || !year || !token) {
     return res
-      .status(400)
+      .status(500)
       .send("Missing day, month or year or seat number or token");
   }
 
   if (!checkDateValidity(day, month, year)) {
-    return res.status(400).send("Invalid day, month or year");
+    return res.status(500).send("Invalid day, month or year");
   }
 
   const booked = await collection.findOne({ day, month, year, token });
@@ -117,5 +117,5 @@ export const free = async (req: Request, res: Response) => {
     return res.status(200).send("Seat is now free");
   }
 
-  return res.status(400).send("Seat is not booked");
+  return res.status(500).send("Seat is not booked");
 };
