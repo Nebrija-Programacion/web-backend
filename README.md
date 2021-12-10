@@ -1,16 +1,7 @@
-## Sessions Index
-
-  * [Session 1](sessions/session1.md)
-  * [Session 2](sessions/session2.md)
-  * [Session 3](sessions/session3.md)
-  * [Session 4](sessions/session4.md)
-  * [Session 5](sessions/session5.md)
 
 ## Bibliography
 
 ### Online tutorials
-
-  * [Deno.js, the complete guide](https://pro.academind.com/p/deno-the-complete-introduction)
   * [Understanding TypeScript](https://www.udemy.com/course/understanding-typescript/learn/)
 
 ### Books  
