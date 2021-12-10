@@ -75,7 +75,7 @@ type User{
 
 Se valorará:
  * La elección de los modelos de datos adecuados para Mongo.
- * El tipado correcto y exaustivo de todo el código.
+ * El tipado correcto y exhaustivo de todo el código.
  * La optimización de las llamadas a Mongo, evitando llamadas insuficientes o resolver cosas con código que se pueden resolver en la query de Mongo. Por ejemplo, sería mala práctica pedir a Mongo TODAS las recetas y luego filtrarlas en javascript por author.
  * El correcto encadenado de los resolvers.
  * Utilizar variables de entorno en un archivo `.env` para datos confidenciales.
