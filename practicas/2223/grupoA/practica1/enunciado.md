@@ -36,17 +36,21 @@ se debe desarrollar una función que produzca el siguiente objeto de tipo `{[key
 
 ```ts
 {
-  "cookies-modal.refuse": "Rechazar",
-  "cookies-modal.title": "Aviso de Cookies",
-  "cookies-modal.text": "Este sitio web utiliza cookies propias y de terceros",
-  "forgot-password.send-button": "Enviar",
-  "forgot-password.email.label": "Correo electrónico",
-  "forgot-password.email.placeholder": "Correo electrónico",
-  "forgot-password.email.error": "No existe una cuenta de usuario asociada a este correo electrónico",
-  "forgot-password.sent-modal.send-again-button": "Volver a enviar email",
-  "forgot-password.sent-modal.text": "Revisa la bandeja de tu correo electrónico, si no se encuentra ahí, es posible que esté en la carpet...",
-  "forgot-password.sent-modal.title": "Email enviado",
-  "forgot-password.text": "Escribe tu correo electrónico y te enviaremos un email con un enlace para que puedas crear una nueva...",
-  "forgot-password.title": "Contraseña olvidada"
+    "cookies-modal.refuse": "Rechazar",
+    "cookies-modal.title": "Aviso de Cookies",
+    "cookies-modal.text":
+      "Este sitio web utiliza cookies propias y de terceros",
+    "forgot-password.send-button": "Enviar",
+    "forgot-password.email.label": "Correo electrónico",
+    "forgot-password.email.placeholder": "Correo electrónico",
+    "forgot-password.email.error":
+      "No existe una cuenta de usuario asociada a este correo electrónico",
+    "forgot-password.sent-modal.send-again-button": "Volver a enviar email",
+    "forgot-password.sent-modal.text":
+      "Revisa la bandeja de tu correo electrónico, si no se encuentra ahí, es posible que esté en la carpeta de Spam.",
+    "forgot-password.sent-modal.title": "Email enviado",
+    "forgot-password.text":
+      "Escribe tu correo electrónico y te enviaremos un email con un enlace para que puedas crear una nueva contraseña.",
+    "forgot-password.title": "Contraseña olvidada",
 }
 ```
