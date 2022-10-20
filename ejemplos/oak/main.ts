@@ -1,4 +1,9 @@
-import { Application, Router } from "https://deno.land/x/oak@v11.1.0/mod.ts";
+import { getQuery } from "https://deno.land/x/oak@v11.1.0/helpers.ts";
+import {
+  Application,
+  Router,
+  helpers,
+} from "https://deno.land/x/oak@v11.1.0/mod.ts";
 
 type Book = {
   id: string;
@@ -23,6 +28,19 @@ const router = new Router();
 
 router
   .get("/books", (context) => {
+    const params = getQuery(context, { mergeParams: true });
+    if (params?.sort === "desc") {
+      context.response.body = books.sort((a, b) =>
+        b.title.localeCompare(a.title)
+      );
+      return;
+    } else if (params?.sort === "asc") {
+      context.response.body = books.sort((a, b) =>
+        a.title.localeCompare(b.title)
+      );
+      return;
+    }
+
     context.response.body = books;
   })
   .get("/books/:id", (context) => {
