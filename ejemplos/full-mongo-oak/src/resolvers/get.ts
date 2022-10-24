@@ -46,8 +46,6 @@ export const getBooks = async (context: GetBooksContext) => {
 };
 
 export const getBook = async (context: GetBookContext) => {
-  const db = context.state.dbclient.database("bookstore") as Database;
-
   if (context.params?.id) {
     const book: BookSchema | undefined = await booksCollection.findOne({
       _id: new ObjectId(context.params.id),
