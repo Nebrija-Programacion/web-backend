@@ -64,20 +64,28 @@ router
     }
   })
   .get("/book/:id", async (context) => {
-    if (context.params?.id) {
-      const bookData = await fetch(
-        `https://gutendex.com/books/${context.params.id}`
-      );
-      const book: Book = await bookData.json();
-      if (book) {
-        const { title, id, authors } = book;
-        context.response.body = { title, id, authors };
-      } else {
-        context.response.status = 404;
-        context.response.body = {
-          message: "Book not found",
-        };
+    try {
+      if (context.params?.id) {
+        const bookData = await fetch(
+          `https://gutendex.com/books/${context.params.id}`
+        );
+        const book: Book = await bookData.json();
+        if (book) {
+          const { title, id, authors } = book;
+          context.response.body = { title, id, authors };
+        } else {
+          context.response.status = 404;
+          context.response.body = {
+            message: "Book not found",
+          };
+        }
       }
+    } catch (e) {
+      console.error(e);
+      context.response.body = {
+        error: e,
+        message: "Internal Server Error",
+      };
     }
   });
 
