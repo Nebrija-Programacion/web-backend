@@ -3,7 +3,7 @@ import { CarSchema } from "./schemas.ts";
 
 const connectMongoDB = async (): Promise<Database> => {
   const mongo_usr = "avalero";
-  const mongo_pwd = "123456789abc";
+  const mongo_pwd = "xxxxxxxxxxx";
   const db_name = "kabifai";
   const mongo_url = `mongodb+srv://${mongo_usr}:${mongo_pwd}@cluster-nebrija.gcxdd.gcp.mongodb.net/${db_name}?authMechanism=SCRAM-SHA-1`;
 
