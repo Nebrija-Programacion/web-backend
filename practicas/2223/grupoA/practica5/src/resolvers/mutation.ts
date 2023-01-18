@@ -1,4 +1,6 @@
 import { ObjectId } from "mongo";
+import * as bcrypt from "bcrypt";
+
 import {
   MatchCollection,
   PlayerCollection,
@@ -12,7 +14,7 @@ import {
   UserSchema,
 } from "../db/schema.ts";
 import { MatchStatus, User } from "../types.ts";
-import { verifyJWT } from "../lib/jwt.ts";
+import { createJWT, verifyJWT } from "../lib/jwt.ts";
 
 export const Mutation = {
   createUser: async (
@@ -27,15 +29,46 @@ export const Mutation = {
       if (exists) {
         throw new Error("User already exists");
       }
+      const hashedPassword = await bcrypt.hash(args.password);
 
       const _id = await UserCollection.insertOne({
         mail,
-        password,
+        password: hashedPassword,
       });
       return {
         _id,
         mail,
         password,
+      };
+    } catch (e) {
+      throw new Error(e);
+    }
+  },
+  login: async (
+    _: unknown,
+    args: { mail: string; password: string }
+  ): Promise<Omit<User, "password">> => {
+    try {
+      const { mail, password } = args;
+      const user = await UserCollection.findOne({
+        mail,
+      });
+      if (!user) {
+        throw new Error("Invalid credentials");
+      }
+
+      const valid = await bcrypt.compare(password, user.password);
+      if (!valid) {
+        throw new Error("Invalid credentials");
+      }
+      const token = await createJWT(
+        { mail, id: user._id.toString() },
+        Deno.env.get("JWT_SECRET") || ""
+      );
+      return {
+        token,
+        id: user._id.toString(),
+        mail: user.mail,
       };
     } catch (e) {
       throw new Error(e);

@@ -25,6 +25,6 @@ export type PlayerSchema = Omit<Player, "id" | "team" | "updatedBy"> & {
   updatedBy: ObjectId;
 };
 
-export type UserSchema = Omit<User, "id"> & {
+export type UserSchema = Omit<User, "id" | "token"> & {
   _id: ObjectId;
 };

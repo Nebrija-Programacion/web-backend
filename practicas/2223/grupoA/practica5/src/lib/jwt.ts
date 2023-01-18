@@ -15,7 +15,7 @@ const generateKey = async (secretKey: string): Promise<CryptoKey> => {
 };
 
 export const createJWT = async (
-  payload: User,
+  payload: Omit<User, "password" | "token">,
   secretKey: string
 ): Promise<string> => {
   const header: Header = {

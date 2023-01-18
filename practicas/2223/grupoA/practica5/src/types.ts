@@ -2,6 +2,7 @@ export type User = {
   id: string;
   mail: string;
   password: string;
+  token: string;
 };
 
 export type Team = {
