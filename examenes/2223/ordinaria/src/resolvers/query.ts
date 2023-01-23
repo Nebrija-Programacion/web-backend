@@ -17,6 +17,6 @@ export const Query = {
   ): Promise<Array<CharacterAPIRest>> => {
     const { ids } = args;
     const characters = wait fetch(`https://rickandmortyapi.com/api/character/${args.ids.toString()}`);
-    return characters.toJson();
+    return characters.json();
   },
 };
