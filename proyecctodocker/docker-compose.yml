@@ -1,0 +1,37 @@
+version: "3.7"
+
+services:
+  front:
+    image: node:18
+    ports: 
+      - 3000:3000
+    volumes:
+      - ./front:/usr/src
+    depends_on:
+      - back
+    command: bash -c "cd /usr/src && npm run dev"
+    environment:
+      - SSR_HOST=http://back:8080
+      - NEXT_PUBLIC_CSR_HOST=http://127.0.0.1:8080
+  back:
+    image: denoland/deno:1.32.1
+    ports:
+      - 8080:8080
+    volumes:
+      - ./back:/usr/src
+    environment:
+      - MONGO_URL=mongodb://mongo/Agenda
+    command: bash -c "cd /usr/src && deno task dev"
+    depends_on:
+      - mongo
+  
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+    volumes:
+      - ./data:/data/db
+    
