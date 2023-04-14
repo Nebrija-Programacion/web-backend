@@ -12,14 +12,20 @@ const dbName = 'Agenda';
 await client.connect();
 console.log('Connected successfully to Mongo server');
 const db = client.db(dbName);
-const UsersCollection = db.collections("Users");
+const UsersCollection = db.collection("Users");
 
 async function handler(req: Request): Promise<Response> {
+  console.log("new request")
   const url = new URL(req.url);
+  console.log("Method:", req.method);
   switch (req.method) {
+    case "OPTIONS": {
+      return new Response("ok", {status: 200});
+    }
     case "GET": {
       switch (url.pathname) {
         case "/contacts": {
+          console.log("contacts");
           const contacts = await UsersCollection.find().toArray();
           return new Response(JSON.stringify({ contacts }), {
             headers: { "content-type": "application/json; charset=utf-8" },
@@ -33,7 +39,7 @@ async function handler(req: Request): Promise<Response> {
       switch (url.pathname) {
         case "/deleteContact": {
           if (req.body) {
-            const body = await req.body({ type: "json" }).value;
+            const body = await req.json();
             console.log("Body:", body);
             const id = body.id
             try {
@@ -54,6 +60,19 @@ async function handler(req: Request): Promise<Response> {
     case "POST": {
       switch (url.pathname) {
         case "/addContact": {
+          if (req.body) {
+            const body = await req.json();
+            console.log("Body:", body);
+            try {
+              const {name, phone} = body;
+              const user = await UsersCollection.insertOne({ name, phone });
+              return new Response(JSON.stringify({name, phone, id: user.insertedId}), { status: 200 });
+            } catch (e) {
+              return new Response(e, { status: 500 });
+            }
+          } else {
+            return new Response("Invalid data", { status: 403 });
+          }
         }
         default:
           return new Response("Invalid route", { status: 404 });
