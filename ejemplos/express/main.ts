@@ -1,4 +1,5 @@
 import { load } from "https://deno.land/std@0.202.0/dotenv/mod.ts";
+import express from "npm:express@4.18.2";
 const env = await load();
 
 const ZIP_BASE_URL = env["ZIP_BASE_URL"];
@@ -75,23 +76,52 @@ type WeatherAPI = {
   };
 };
 
-// ask in deno for user input to introduce zip code
-const zipCode = prompt("Enter your zip code");
+const app = express();
 
-// Documentation: http://parseapi.com/postalcode
-const data = await fetch(`${ZIP_BASE_URL}/api/${ZIP_API_KEY}/28250`);
-const zipJSON: ZipAPI = await data.json();
+app
+  .get("/", (req, res) => {
+    res.status(200).send("Hello World!");
+  })
+  .get("/weather/:zipcode", async (req, res) => {
+    // read body
+    console.log(parseInt(req?.params?.zipcode));
+    if (isNaN(parseInt(req?.params?.zipcode))) {
+      res.status(400).send("Zipcode is not a number");
+      return;
+    }
 
-const city = zipJSON.city.name;
-const country = zipJSON.country.name;
+    const zipCode = req?.params?.zipcode;
+    const data = await fetch(`${ZIP_BASE_URL}/api/${ZIP_API_KEY}/${zipCode}`);
 
-console.log(zipJSON);
+    if (data.status !== 200) {
+      res.status(400).send("Zipcode is not valid");
+      return;
+    }
 
-console.log(city);
+    const zipJSON: ZipAPI = await data.json();
 
-// get weather
-const weatherData = await fetch(
-  `${WEATHERAPI_BASE_URL}/current.json?key=${WEATHERAPI_API_KEY}&q=${city}`
-);
-const weatherJson: WeatherAPI = await weatherData.json();
-console.log(weatherJson);
+    const city = zipJSON.city.name;
+    const country = zipJSON.country.name;
+
+    // get weather
+    const weatherData = await fetch(
+      `${WEATHERAPI_BASE_URL}/current.json?key=${WEATHERAPI_API_KEY}&q=${city}`
+    );
+
+    if (weatherData.status !== 200) {
+      res.status(400).send("Weather data not found");
+      return;
+    }
+
+    const weatherJson: WeatherAPI = await weatherData.json();
+    res.status(200).send({
+      city,
+      country,
+      temperature_C: weatherJson.current.temp_c,
+      condition: weatherJson.current.condition.text,
+    });
+  });
+
+app.listen(3000, () => {
+  console.log("Server started on port 3000");
+});
