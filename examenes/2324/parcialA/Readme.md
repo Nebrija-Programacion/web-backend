@@ -32,7 +32,7 @@ Se pueden usar las siguientes APIs para obtener la información necesaria:
  - https://zip-api.eu/
  - https://worldtimeapi.org/
  - https://www.weatherapi.com/
- - 
+   
 #### Endpoints:
 *(cualquier error desconocido devolverá un status 500)*
 - `GET /api/contactos`: Obtiene una lista de todos los contactos, indicando (solo) nombre y DNI **(1.5 puntos)**.
