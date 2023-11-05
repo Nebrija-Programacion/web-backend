@@ -1,0 +1,8 @@
+{
+  "tasks": {
+    "dev": "DB=contactos deno run --env --allow-all --watch main.ts",
+    "test-app": "DB=ContactTest deno run --env --allow-all main.ts",
+    "test": "DB=ContactTest deno test --env --allow-all",
+    "run-tests": "deno task test-app & sleep 5 && deno task test"
+  }
+}

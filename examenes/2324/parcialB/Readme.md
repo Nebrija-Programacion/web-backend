@@ -30,10 +30,15 @@ La información que la API debe mostrar al solicitar un monumento determinado
  - Nombre
  - Descripción
  - Código Postal
- - Ciudad dónde se encuentra (usar la API (usar la API https://zip-api.eu/ - `place_name`)
- - País donde se encuentra (usar la API https://zip-api.eu/ - `state`)
- - Hora actual en el páis donde se encuentra (usar la API https://worldtimeapi.org/ ) - *hora al realizar la consulta*.
- - Condiciones metereológicas del lugar donde se encuentra (usar la API (https://www.weatherapi.com/ - `condition.text` ) - *climatología al realizar la consulta*.
+ - Ciudad dónde se encuentra
+ - País donde se encuentra
+ - Hora actual en el páis donde se encuentra
+ - Condiciones metereológicas del lugar donde se encuentra
+
+ Se pueden usar las siguientes API
+  - https://zip-api.eu/
+  - https://worldtimeapi.org/
+  - https://www.weatherapi.com/s
 
 #### Endpoints:
 *(cualquier error desconocido devolverá un status 500)*
