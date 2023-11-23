@@ -1,0 +1,10 @@
+{
+  "tasks": {
+    "dev": "deno run --env --allow-all --watch main.ts"
+  },
+  "imports": {
+    "@apollo/server": "npm:@apollo/server@^4.9.5",
+    "@apollo/server/standalone": "npm:@apollo/server@^4.9.5/standalone",
+    "graphql": "npm:graphql@^16.8.1"
+  }
+}
