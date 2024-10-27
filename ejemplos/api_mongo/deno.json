@@ -1,0 +1,8 @@
+{
+  "tasks": {
+    "dev": "deno run --env -A --watch main.ts"
+  },
+  "imports": {
+    "mongodb": "npm:mongodb@^6.10.0"
+  }
+}
