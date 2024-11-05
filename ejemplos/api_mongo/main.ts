@@ -177,16 +177,9 @@ const handler = async (req: Request): Promise<Response> => {
         return new Response("Book not found", { status: 404 });
       }
 
-      const users = await usersCollection
-        .find({ books: new ObjectId(id) })
-        .toArray();
-      await Promise.all(
-        users.map((u) =>
-          usersCollection.updateOne(
-            { _id: u._id },
-            { $pull: { books: new ObjectId(id) } }
-          )
-        )
+      await usersCollection.updateMany(
+        { books: new ObjectId(id) },
+        { $pull: { books: new ObjectId(id) } }
       );
 
       return new Response("OK", { status: 200 });
