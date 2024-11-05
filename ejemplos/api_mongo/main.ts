@@ -154,20 +154,43 @@ const handler = async (req: Request): Promise<Response> => {
       return new Response("OK", { status: 200 });
     }
   } else if (method === "DELETE") {
-    const user = await req.json();
-    if (!user.email) {
-      return new Response("Bad request", { status: 400 });
+    if (path === "/user") {
+      const id = url.searchParams.get("id");
+      if (!id) return new Response("Bad request", { status: 400 });
+      const { deletedCount } = await usersCollection.deleteOne({
+        _id: new ObjectId(id),
+      });
+
+      if (deletedCount === 0) {
+        return new Response("User not found", { status: 404 });
+      }
+
+      return new Response("OK", { status: 200 });
+    } else if (path === "/book") {
+      const id = url.searchParams.get("id");
+      if (!id) return new Response("Bad request", { status: 400 });
+      const { deletedCount } = await booksCollection.deleteOne({
+        _id: new ObjectId(id),
+      });
+
+      if (deletedCount === 0) {
+        return new Response("Book not found", { status: 404 });
+      }
+
+      const users = await usersCollection
+        .find({ books: new ObjectId(id) })
+        .toArray();
+      await Promise.all(
+        users.map((u) =>
+          usersCollection.updateOne(
+            { _id: u._id },
+            { $pull: { books: new ObjectId(id) } }
+          )
+        )
+      );
+
+      return new Response("OK", { status: 200 });
     }
-
-    const { deletedCount } = await usersCollection.deleteOne({
-      email: user.email,
-    });
-
-    if (deletedCount === 0) {
-      return new Response("User not found", { status: 404 });
-    }
-
-    return new Response("OK", { status: 200 });
   }
 
   return new Response("endpoint not found", { status: 404 });
