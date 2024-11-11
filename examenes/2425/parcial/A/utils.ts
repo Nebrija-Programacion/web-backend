@@ -12,7 +12,7 @@ const fromPersonModelsToFriends = (friends: PersonModel[]) => {
 
 export const fromModelToPerson = async (
   model: PersonModel,
-  PersonCollection: Collection<PersonModel>
+  PersonCollection: Collection<PersonModel>,
 ): Promise<Person> => {
   const friends = await PersonCollection.find({
     _id: { $in: model.friends },
@@ -28,7 +28,7 @@ export const fromModelToPerson = async (
 
 export const checkFriendsExist = async (
   friends: string[],
-  PersonCollection: Collection<PersonModel>
+  PersonCollection: Collection<PersonModel>,
 ) => {
   const friendsDB = await PersonCollection.find({
     _id: { $in: friends.map((id) => new ObjectId(id)) },

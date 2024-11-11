@@ -38,7 +38,7 @@ const handler = async (req: Request): Promise<Response> => {
 
       // Convert user data to a response-friendly format
       const users = await Promise.all(
-        usersDB.map((user) => fromModelToPerson(user, usersCollection))
+        usersDB.map((user) => fromModelToPerson(user, usersCollection)),
       );
 
       // Return the list of users as JSON
@@ -62,7 +62,7 @@ const handler = async (req: Request): Promise<Response> => {
         // If user is not found, return a 404 response
         return new Response(
           JSON.stringify({ error: "Persona no encontrada" }),
-          { status: 404, headers: { "Content-Type": "application/json" } }
+          { status: 404, headers: { "Content-Type": "application/json" } },
         );
       }
 
@@ -86,7 +86,7 @@ const handler = async (req: Request): Promise<Response> => {
           JSON.stringify({
             error: "Name, email, phone and friends are required",
           }),
-          { status: 400, headers: { "Content-Type": "application/json" } }
+          { status: 400, headers: { "Content-Type": "application/json" } },
         );
       }
 
@@ -95,7 +95,7 @@ const handler = async (req: Request): Promise<Response> => {
       if (emailExists) {
         return new Response(
           JSON.stringify({ error: "El email ya está registrado." }),
-          { status: 400, headers: { "Content-Type": "application/json" } }
+          { status: 400, headers: { "Content-Type": "application/json" } },
         );
       }
 
@@ -104,7 +104,7 @@ const handler = async (req: Request): Promise<Response> => {
       if (phoneExists) {
         return new Response(
           JSON.stringify({ error: "El teléfono ya está registrado." }),
-          { status: 400, headers: { "Content-Type": "application/json" } }
+          { status: 400, headers: { "Content-Type": "application/json" } },
         );
       }
 
@@ -113,7 +113,7 @@ const handler = async (req: Request): Promise<Response> => {
       if (!friendsExist) {
         return new Response(
           JSON.stringify({ error: "Amigos no encontrados." }),
-          { status: 404, headers: { "Content-Type": "application/json" } }
+          { status: 404, headers: { "Content-Type": "application/json" } },
         );
       }
 
@@ -163,7 +163,7 @@ const handler = async (req: Request): Promise<Response> => {
       if (!user) {
         return new Response(
           JSON.stringify({ error: "Persona no encontrada" }),
-          { status: 404, headers: { "Content-Type": "application/json" } }
+          { status: 404, headers: { "Content-Type": "application/json" } },
         );
       }
 
@@ -175,7 +175,7 @@ const handler = async (req: Request): Promise<Response> => {
       if (phoneExists) {
         return new Response(
           JSON.stringify({ error: "El teléfono ya está registrado." }),
-          { status: 400, headers: { "Content-Type": "application/json" } }
+          { status: 400, headers: { "Content-Type": "application/json" } },
         );
       }
 
@@ -184,7 +184,7 @@ const handler = async (req: Request): Promise<Response> => {
       if (!friendsExist) {
         return new Response(
           JSON.stringify({ error: "Amigos no encontrados." }),
-          { status: 404, headers: { "Content-Type": "application/json" } }
+          { status: 404, headers: { "Content-Type": "application/json" } },
         );
       }
 
@@ -194,7 +194,7 @@ const handler = async (req: Request): Promise<Response> => {
       // Update the user's information
       await usersCollection.updateOne(
         { email },
-        { $set: { name, phone, friends: friendIds } }
+        { $set: { name, phone, friends: friendIds } },
       );
 
       // Retrieve the updated user
@@ -228,7 +228,7 @@ const handler = async (req: Request): Promise<Response> => {
       if (!user) {
         return new Response(
           JSON.stringify({ error: "Persona no encontrada" }),
-          { status: 404, headers: { "Content-Type": "application/json" } }
+          { status: 404, headers: { "Content-Type": "application/json" } },
         );
       }
 
@@ -238,7 +238,7 @@ const handler = async (req: Request): Promise<Response> => {
       // Remove the user from friends lists of other users
       await usersCollection.updateMany(
         { friends: user._id },
-        { $pull: { friends: user._id } }
+        { $pull: { friends: user._id } },
       );
 
       const response = { message: "Persona eliminada exitosamente" };
