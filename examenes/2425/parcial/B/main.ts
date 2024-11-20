@@ -1,5 +1,5 @@
-import { Collection, MongoClient, Db, ObjectId } from "mongodb";
-import { Author, AuthorModel, BookModel } from "./types.ts";
+import { Db, MongoClient, ObjectId } from "mongodb";
+import { AuthorModel, BookModel } from "./types.ts";
 import { fromBookModelToBook, verifyAuthors } from "./utils.ts";
 
 const MONGO_URL = Deno.env.get("MONGO_URL");
@@ -33,7 +33,7 @@ const handler = async (request: Request): Promise<Response> => {
         const libros = await Promise.all(
           librosModels.map((bookModel) =>
             fromBookModelToBook(bookModel, AuthorsCollection)
-          )
+          ),
         );
         return new Response(JSON.stringify(libros), {
           headers: { "content-type": "application/json" },
@@ -43,7 +43,7 @@ const handler = async (request: Request): Promise<Response> => {
         const libros = await Promise.all(
           librosModels.map((bookModel) =>
             fromBookModelToBook(bookModel, AuthorsCollection)
-          )
+          ),
         );
         return new Response(JSON.stringify(libros), {
           headers: { "content-type": "application/json" },
@@ -81,7 +81,7 @@ const handler = async (request: Request): Promise<Response> => {
           }),
           {
             status: 400,
-          }
+          },
         );
       }
 
@@ -91,7 +91,7 @@ const handler = async (request: Request): Promise<Response> => {
           JSON.stringify({ error: "Alguno de los autores no existe." }),
           {
             status: 400,
-          }
+          },
         );
       }
 
@@ -108,7 +108,7 @@ const handler = async (request: Request): Promise<Response> => {
           authors: authors.map((id: string) => new ObjectId(id)),
           numberOfCopies: numberOfCopies || 0,
         },
-        AuthorsCollection
+        AuthorsCollection,
       );
       return new Response(
         JSON.stringify({
@@ -117,7 +117,7 @@ const handler = async (request: Request): Promise<Response> => {
         }),
         {
           headers: { "content-type": "application/json" },
-        }
+        },
       );
     } else if (path === "/autor") {
       const body = await request.json();
@@ -127,7 +127,7 @@ const handler = async (request: Request): Promise<Response> => {
           JSON.stringify({ error: "El nombre es un campo requerido." }),
           {
             status: 400,
-          }
+          },
         );
       }
 
@@ -147,7 +147,7 @@ const handler = async (request: Request): Promise<Response> => {
         }),
         {
           headers: { "content-type": "application/json" },
-        }
+        },
       );
     }
   } else if (method === "PUT") {
@@ -166,7 +166,7 @@ const handler = async (request: Request): Promise<Response> => {
           JSON.stringify({ error: "Alguno de los autores no existe." }),
           {
             status: 400,
-          }
+          },
         );
       }
 
@@ -178,7 +178,7 @@ const handler = async (request: Request): Promise<Response> => {
             authors: authors?.map((id: string) => new ObjectId(id)),
             numberOfCopies: numberOfCopies || 0,
           },
-        }
+        },
       );
 
       if (modifiedCount === 0) {
@@ -198,7 +198,7 @@ const handler = async (request: Request): Promise<Response> => {
         }),
         {
           headers: { "content-type": "application/json" },
-        }
+        },
       );
     }
   } else if (method === "DELETE") {
@@ -223,7 +223,11 @@ const handler = async (request: Request): Promise<Response> => {
       JSON.stringify({ message: "Libro eliminado exitosamente" }),
       {
         headers: { "content-type": "application/json" },
-      }
+      },
     );
   }
+
+  return new Response(null, { status: 404 });
 };
+
+Deno.serve({ port: 3000 }, handler);

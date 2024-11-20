@@ -2,7 +2,7 @@ import { Collection, ObjectId } from "mongodb";
 import { Author, AuthorModel, Book, BookModel } from "./types.ts";
 
 export const fromAuthorModelToAuthor = (
-  authorModel: AuthorModel
+  authorModel: AuthorModel,
 ): Partial<Author> => {
   return {
     id: authorModel._id!.toString(),
@@ -12,7 +12,7 @@ export const fromAuthorModelToAuthor = (
 
 export const fromBookModelToBook = async (
   bookModel: BookModel,
-  AuthorsCollection: Collection<AuthorModel>
+  AuthorsCollection: Collection<AuthorModel>,
 ): Promise<Book> => {
   const authors = await AuthorsCollection.find({
     _id: { $in: bookModel.authors },
@@ -27,7 +27,7 @@ export const fromBookModelToBook = async (
 
 export const verifyAuthors = async (
   ids: string[],
-  AuthorsCollection: Collection<AuthorModel>
+  AuthorsCollection: Collection<AuthorModel>,
 ): Promise<boolean> => {
   const authors = await AuthorsCollection.find({
     _id: { $in: ids.map((id) => new ObjectId(id)) },

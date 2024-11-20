@@ -1,4 +1,4 @@
-import { OptionalId, ObjectId } from "mongodb";
+import { ObjectId, OptionalId } from "mongodb";
 export type BookModel = OptionalId<{
   title: string;
   authors: ObjectId[];
