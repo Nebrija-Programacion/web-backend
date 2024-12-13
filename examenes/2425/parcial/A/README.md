@@ -1,4 +1,3 @@
-````markdown
 # Examen Parcial
 
 ## Normativa
@@ -243,5 +242,3 @@ almacenar la siguiente información para cada una:
   validación de datos ok) y el código presenta solo errores menores.
 - **100%** - Funciona correctamente y el código no presenta errores.
 
-```
-```
