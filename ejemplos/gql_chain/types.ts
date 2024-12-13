@@ -8,6 +8,7 @@ export type UserModel = OptionalId<{
 
 export type User = {
     id: string,
+    name: string,
     email: string,
     friends: User[],
     numberOfFriends: number,
