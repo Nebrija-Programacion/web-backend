@@ -8,8 +8,7 @@ import { resolvers } from "./resolvers.ts";
 const MONGO_URL = Deno.env.get("MONGO_URL");
 
 if (!MONGO_URL) {
-  console.error("MONGO_URL is not defined");
-  Deno.exit(1);
+  throw new Error("MONGO_URL is not defined");
 }
 
 const mongoClient = new MongoClient(MONGO_URL);
